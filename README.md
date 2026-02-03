@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# EquisMath
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para resolver y visualizar ecuaciones lineales de forma interactiva.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Parser de ecuaciones**: Interpreta ecuaciones lineales de una o dos variables
+- **Resolución paso a paso**: Muestra el proceso de resolución detallado
+- **Gráfica interactiva**: Visualiza las ecuaciones con líneas infinitas estilo GeoGebra
+- **Tooltips en puntos**: Muestra coordenadas al pasar el cursor sobre puntos de interés
+- **Zoom y pan**: Navega por el plano cartesiano con controles de zoom
+- **Soporte para sistemas**: Resuelve sistemas de dos ecuaciones lineales
+- **Diseño Neo-Chalkboard**: Interfaz con estética de pizarra moderna
 
-## React Compiler
+## Tecnologías
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** + **TypeScript**
+- **Vite** - Build tool
+- **Tailwind CSS 4** - Estilos
+- **Mafs** - Gráficas matemáticas interactivas
+- **MathLive** - Input de ecuaciones matemáticas
+- **Zustand** - Estado global
+- **shadcn/ui** - Componentes UI
 
-## Expanding the ESLint configuration
+## Desarrollo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Instalar dependencias
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Servidor de desarrollo
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Build de producción
+npm run build
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Preview del build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Despliegue con Docker
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Construir imagen
+docker build -t equismath .
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Ejecutar contenedor
+docker run -d -p 8080:80 --name equismath equismath
 ```
+
+La aplicación estará disponible en `http://localhost:8080`.
+
+## Estructura del proyecto
+
+```
+src/
+├── components/       # Componentes React
+│   ├── ui/          # Componentes shadcn/ui
+│   ├── Graph.tsx    # Gráfica interactiva (Mafs)
+│   ├── InputBar.tsx # Input de ecuaciones (MathLive)
+│   └── ...
+├── modules/         # Lógica de negocio
+│   ├── parser.ts    # Parser de ecuaciones
+│   └── solver.ts    # Resolución de ecuaciones
+├── store/           # Estado global (Zustand)
+├── types/           # Tipos TypeScript
+└── utils/           # Utilidades
+```
+
+## Licencia
+
+MIT
