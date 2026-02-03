@@ -1,0 +1,487 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chalk-yellow: var(--chalk-yellow);
+  --color-chalk-pink: var(--chalk-pink);
+  --color-chalk-blue: var(--chalk-blue);
+  --color-chalk-white: var(--chalk-white);
+  --color-wood: var(--wood);
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Neo-Chalkboard: Dark green slate */
+  --background: oklch(0.18 0.04 145);
+  --foreground: oklch(0.95 0.01 90);
+  --card: oklch(0.22 0.035 145);
+  --card-foreground: oklch(0.95 0.01 90);
+  --popover: oklch(0.2 0.04 145);
+  --popover-foreground: oklch(0.95 0.01 90);
+  --primary: oklch(0.85 0.14 85);
+  --primary-foreground: oklch(0.15 0.04 145);
+  --secondary: oklch(0.28 0.03 145);
+  --secondary-foreground: oklch(0.92 0.01 90);
+  --muted: oklch(0.25 0.03 145);
+  --muted-foreground: oklch(0.7 0.02 90);
+  --accent: oklch(0.75 0.12 350);
+  --accent-foreground: oklch(0.15 0.04 145);
+  --destructive: oklch(0.6 0.2 25);
+  --border: oklch(0.32 0.03 145);
+  --input: oklch(0.26 0.03 145);
+  --ring: oklch(0.85 0.14 85);
+  /* Chalk colors */
+  --chalk-yellow: oklch(0.88 0.15 90);
+  --chalk-pink: oklch(0.78 0.12 350);
+  --chalk-blue: oklch(0.72 0.1 230);
+  --chalk-white: oklch(0.95 0.01 90);
+  --wood: oklch(0.35 0.06 55);
+  /* Chart colors - vibrant chalk */
+  --chart-1: oklch(0.85 0.14 85);
+  --chart-2: oklch(0.78 0.12 350);
+  --chart-3: oklch(0.72 0.1 230);
+  --chart-4: oklch(0.75 0.15 145);
+  --chart-5: oklch(0.8 0.13 30);
+  --sidebar: oklch(0.16 0.04 145);
+  --sidebar-foreground: oklch(0.95 0.01 90);
+  --sidebar-primary: oklch(0.85 0.14 85);
+  --sidebar-primary-foreground: oklch(0.15 0.04 145);
+  --sidebar-accent: oklch(0.28 0.03 145);
+  --sidebar-accent-foreground: oklch(0.92 0.01 90);
+  --sidebar-border: oklch(0.32 0.03 145);
+  --sidebar-ring: oklch(0.85 0.14 85);
+}
+
+/* Light mode - cream paper with subtle green tint */
+.light {
+  --background: oklch(0.97 0.01 95);
+  --foreground: oklch(0.2 0.04 145);
+  --card: oklch(0.99 0.005 95);
+  --card-foreground: oklch(0.2 0.04 145);
+  --popover: oklch(0.99 0.005 95);
+  --popover-foreground: oklch(0.2 0.04 145);
+  --primary: oklch(0.45 0.12 145);
+  --primary-foreground: oklch(0.98 0.01 90);
+  --secondary: oklch(0.94 0.02 145);
+  --secondary-foreground: oklch(0.25 0.04 145);
+  --muted: oklch(0.95 0.015 95);
+  --muted-foreground: oklch(0.45 0.03 145);
+  --accent: oklch(0.55 0.15 350);
+  --accent-foreground: oklch(0.98 0.01 90);
+  --destructive: oklch(0.55 0.22 25);
+  --border: oklch(0.88 0.02 145);
+  --input: oklch(0.92 0.015 95);
+  --ring: oklch(0.45 0.12 145);
+  --chalk-yellow: oklch(0.65 0.14 85);
+  --chalk-pink: oklch(0.55 0.15 350);
+  --chalk-blue: oklch(0.5 0.12 230);
+  --chalk-white: oklch(0.3 0.04 145);
+  --wood: oklch(0.5 0.08 55);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+/* ===== CHALKBOARD BACKGROUND ===== */
+.chalkboard-bg {
+  position: relative;
+  background: 
+    /* Noise texture overlay */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"),
+    /* Gradient base */
+    radial-gradient(ellipse at 30% 20%, oklch(0.22 0.045 150) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, oklch(0.2 0.05 140) 0%, transparent 50%),
+    linear-gradient(180deg, oklch(0.19 0.04 145) 0%, oklch(0.16 0.035 145) 100%);
+  background-blend-mode: overlay, normal, normal, normal;
+}
+
+.chalkboard-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    /* Subtle chalk dust particles */
+    radial-gradient(circle at 20% 30%, oklch(0.95 0.01 90 / 0.03) 0%, transparent 2px),
+    radial-gradient(circle at 80% 20%, oklch(0.95 0.01 90 / 0.02) 0%, transparent 1px),
+    radial-gradient(circle at 45% 70%, oklch(0.95 0.01 90 / 0.025) 0%, transparent 1.5px),
+    radial-gradient(circle at 90% 60%, oklch(0.95 0.01 90 / 0.02) 0%, transparent 1px);
+  pointer-events: none;
+}
+
+/* ===== WOOD FRAME ===== */
+.wood-frame {
+  position: relative;
+  border: 6px solid var(--wood);
+  box-shadow: 
+    inset 0 0 0 2px oklch(0.4 0.05 55),
+    inset 0 0 0 4px oklch(0.3 0.06 55),
+    0 8px 32px oklch(0 0 0 / 0.4),
+    0 2px 8px oklch(0 0 0 / 0.2);
+}
+
+.wood-frame::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.38 0.06 55) 0px,
+      oklch(0.32 0.05 55) 2px,
+      oklch(0.38 0.06 55) 4px
+    );
+  z-index: -1;
+  border-radius: inherit;
+}
+
+/* ===== CHALK TEXT EFFECTS ===== */
+.chalk-title {
+  font-family: var(--font-display);
+  color: var(--chalk-white);
+  text-shadow: 
+    0 0 1px oklch(0.95 0.01 90 / 0.8),
+    0 0 2px oklch(0.95 0.01 90 / 0.4),
+    1px 1px 0 oklch(0 0 0 / 0.3);
+  letter-spacing: -0.02em;
+}
+
+.chalk-yellow {
+  color: var(--chalk-yellow);
+  text-shadow: 
+    0 0 1px oklch(0.88 0.15 90 / 0.9),
+    0 0 3px oklch(0.88 0.15 90 / 0.3);
+}
+
+.chalk-pink {
+  color: var(--chalk-pink);
+  text-shadow: 
+    0 0 1px oklch(0.78 0.12 350 / 0.9),
+    0 0 3px oklch(0.78 0.12 350 / 0.3);
+}
+
+.chalk-blue {
+  color: var(--chalk-blue);
+  text-shadow: 
+    0 0 1px oklch(0.72 0.1 230 / 0.9),
+    0 0 3px oklch(0.72 0.1 230 / 0.3);
+}
+
+/* ===== CHALK UNDERLINE ===== */
+.chalk-underline {
+  position: relative;
+}
+
+.chalk-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      var(--chalk-yellow) 0px,
+      var(--chalk-yellow) 8px,
+      transparent 8px,
+      transparent 12px
+    );
+  opacity: 0.7;
+  filter: blur(0.3px);
+}
+
+/* ===== DECORATIVE MATH SYMBOLS ===== */
+.math-decorations {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+.math-decorations::before {
+  content: '∫ ∑ π √ ∞ ≈ ± × ÷ = ƒ Δ θ λ';
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  color: var(--chalk-white);
+  white-space: nowrap;
+  animation: float-symbols 60s linear infinite;
+  top: 10%;
+  left: -100%;
+}
+
+.math-decorations::after {
+  content: 'y = mx + b    ax² + bx + c    ∂/∂x    lim    ∫₀^∞';
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--chalk-yellow);
+  white-space: nowrap;
+  animation: float-symbols 80s linear infinite reverse;
+  bottom: 15%;
+  right: -100%;
+  opacity: 0.5;
+}
+
+@keyframes float-symbols {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(200%); }
+}
+
+/* ===== CARD STYLES (Slate panels) ===== */
+.slate-card {
+  background: 
+    linear-gradient(135deg, oklch(0.24 0.035 145) 0%, oklch(0.2 0.04 145) 100%);
+  border: 2px solid oklch(0.35 0.03 145);
+  box-shadow: 
+    inset 0 1px 0 oklch(0.3 0.03 145),
+    inset 0 -1px 0 oklch(0.15 0.04 145),
+    0 4px 16px oklch(0 0 0 / 0.3),
+    0 1px 3px oklch(0 0 0 / 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.slate-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ===== BUTTON STYLES ===== */
+.chalk-button {
+  position: relative;
+  background: linear-gradient(180deg, var(--chalk-yellow) 0%, oklch(0.82 0.14 85) 100%);
+  color: oklch(0.15 0.04 145);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: none;
+  box-shadow: 
+    0 2px 0 oklch(0.7 0.12 85),
+    0 4px 8px oklch(0 0 0 / 0.3),
+    inset 0 1px 0 oklch(0.92 0.1 90);
+  transition: all 0.15s ease;
+}
+
+.chalk-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 3px 0 oklch(0.7 0.12 85),
+    0 6px 12px oklch(0 0 0 / 0.35),
+    inset 0 1px 0 oklch(0.95 0.08 90);
+}
+
+.chalk-button:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 1px 0 oklch(0.7 0.12 85),
+    0 2px 4px oklch(0 0 0 / 0.3),
+    inset 0 1px 0 oklch(0.88 0.12 85);
+}
+
+/* ===== INPUT STYLES ===== */
+.chalk-input {
+  background: oklch(0.16 0.035 145);
+  border: 2px solid oklch(0.35 0.03 145);
+  color: var(--chalk-white);
+  font-family: var(--font-mono);
+  box-shadow: 
+    inset 0 2px 4px oklch(0 0 0 / 0.2),
+    0 1px 0 oklch(0.3 0.03 145);
+  transition: all 0.2s ease;
+}
+
+.chalk-input:focus {
+  border-color: var(--chalk-yellow);
+  box-shadow: 
+    inset 0 2px 4px oklch(0 0 0 / 0.2),
+    0 0 0 3px oklch(0.85 0.14 85 / 0.2),
+    0 1px 0 oklch(0.3 0.03 145);
+  outline: none;
+}
+
+.chalk-input::placeholder {
+  color: oklch(0.5 0.02 145);
+  font-style: italic;
+}
+
+/* Ocultar botones del teclado virtual y menú de MathLive */
+math-field::part(menu-toggle) {
+  display: none;
+}
+
+/* ===== EQUATION DISPLAY ===== */
+.equation-box {
+  position: relative;
+  padding: 1rem 1.25rem;
+  background: oklch(0.18 0.04 145);
+  border-left: 4px solid var(--chalk-yellow);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+}
+
+.equation-box::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--chalk-yellow), var(--chalk-pink));
+  filter: blur(0.5px);
+}
+
+/* ===== STEP ANIMATION ===== */
+.step-item {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: step-appear 0.4s ease forwards;
+}
+
+.step-item:nth-child(1) { animation-delay: 0.1s; }
+.step-item:nth-child(2) { animation-delay: 0.2s; }
+.step-item:nth-child(3) { animation-delay: 0.3s; }
+.step-item:nth-child(4) { animation-delay: 0.4s; }
+.step-item:nth-child(5) { animation-delay: 0.5s; }
+.step-item:nth-child(6) { animation-delay: 0.6s; }
+.step-item:nth-child(7) { animation-delay: 0.7s; }
+.step-item:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes step-appear {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== GRAPH AREA ===== */
+.graph-container {
+  position: absolute;
+  inset: 0;
+  background: 
+    /* Grid lines */
+    linear-gradient(to right, oklch(0.4 0.03 145 / 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.4 0.03 145 / 0.3) 1px, transparent 1px),
+    /* Subtle radial gradient */
+    radial-gradient(ellipse at center, oklch(0.2 0.04 145) 0%, oklch(0.16 0.035 145) 100%);
+  background-size: 30px 30px, 30px 30px, 100% 100%;
+  border: 3px solid oklch(0.35 0.03 145);
+  box-shadow: 
+    inset 0 0 30px oklch(0 0 0 / 0.2),
+    0 4px 16px oklch(0 0 0 / 0.3);
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.18 0.04 145);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.03 145);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.4 0.03 145);
+}
+
+/* ===== KATEX STYLING ===== */
+.katex {
+  color: var(--chalk-white) !important;
+}
+
+.katex .mord,
+.katex .mbin,
+.katex .mrel {
+  text-shadow: 0 0 1px oklch(0.95 0.01 90 / 0.5);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Glow effect for interactive elements */
+.glow-hover {
+  transition: all 0.2s ease;
+}
+
+.glow-hover:hover {
+  filter: drop-shadow(0 0 8px oklch(0.85 0.14 85 / 0.4));
+}
+
+/* Chalk dust particle effect on click */
+@keyframes chalk-dust {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) translateY(-20px);
+  }
+}
