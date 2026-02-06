@@ -49,6 +49,13 @@ export function validateMove(
   // Check: VARIABLE with coefficient (term variable)
   const isVarWithCoeff = block.type === "VARIABLE" && isVariableWithCoefficient(sideBlocks, block.id);
   if (isVarWithCoeff) {
+    // Same-side reorder would change semantics (mergeSide interprets position: coeff vs standalone)
+    if (fromSide === toSide) {
+      return {
+        valid: false,
+        reason: "No reordenes el término variable en el mismo lado",
+      };
+    }
     // Moving term variable removes 2 blocks (coeff + var)
     if (sideBlocks.length <= 2) {
       return {
@@ -77,6 +84,13 @@ export function validateMove(
   // Check: CONSTANT acting as coefficient
   const isCoeffConst = block.type === "CONSTANT" && isCoefficientConstant(sideBlocks, block.id);
   if (isCoeffConst) {
+    // Same-side reorder would break coeff+var pairing (mergeSide uses position)
+    if (fromSide === toSide) {
+      return {
+        valid: false,
+        reason: "No reordenes el coeficiente en el mismo lado",
+      };
+    }
     // Coefficient 0 would cause division by zero
     if (block.value === 0) {
       return {

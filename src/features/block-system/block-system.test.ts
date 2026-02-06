@@ -162,6 +162,26 @@ describe("features/block-system (Fase 4)", () => {
       expect(result.valid).toBe(false);
       expect(result.reason).toBe("No se puede dejar un lado vacío");
     });
+
+    it("returns valid=false when reordering term variable on same side (Level 1 bug)", () => {
+      const equation = eq(
+        [constant("c0", -5), variable("v1", 1), constant("c1", 5)],
+        [constant("c2", 45)]
+      );
+      const result = validateMove(variable("v1", 1), "left", "left", equation);
+      expect(result.valid).toBe(false);
+      expect(result.reason).toBe("No reordenes el término variable en el mismo lado");
+    });
+
+    it("returns valid=false when reordering coefficient on same side", () => {
+      const equation = eq(
+        [constant("c0", 2), variable("v1", 1), constant("c1", 5)],
+        [constant("c2", 7)]
+      );
+      const result = validateMove(constant("c0", 2), "left", "left", equation);
+      expect(result.valid).toBe(false);
+      expect(result.reason).toBe("No reordenes el coeficiente en el mismo lado");
+    });
   });
 
   describe("applyMove - sign change rule (FR2)", () => {
