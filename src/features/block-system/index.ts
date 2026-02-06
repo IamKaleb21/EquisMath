@@ -1,0 +1,10 @@
+export { validateMove, canCoefficientBeMoved } from "./validateMove";
+export { applyMove } from "./applyMove";
+export { simplifyEquation } from "./simplifyEquation";
+export { checkVictory } from "./checkVictory";
+export { EquationBar } from "./EquationBar";
+export { BlockItem } from "./BlockItem";
+export { blockLabel, termLabel } from "./blockLabel";
+export type { ValidateMoveResult } from "./types";
+export type { EquationBarProps } from "./EquationBar";
+export type { BlockItemProps } from "./BlockItem";
