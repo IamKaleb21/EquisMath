@@ -1,13 +1,22 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { useGameStore } from "@/shared/store/gameStore";
 import { RoleSelector } from "@/features/role-selector";
 import { StudentMode } from "@/features/student-mode";
 import { TeacherMode } from "@/features/teacher-mode";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 
 function App() {
   const role = useGameStore((s) => s.role);
+  const setRole = useGameStore((s) => s.setRole);
+  const persistToLocalStorage = useGameStore((s) => s.persistToLocalStorage);
+
+  function handleBackToOnboarding() {
+    setRole(null);
+    persistToLocalStorage();
+  }
 
   useEffect(() => {
     useGameStore.getState().hydrateFromLocalStorage();
@@ -30,11 +39,26 @@ function App() {
         role === "STUDENT" ? "h-screen overflow-hidden" : "min-h-screen overflow-y-auto"
       )}>
         <header className="shrink-0 border-b border-border/50 bg-zinc-950/80 px-4 py-4 backdrop-blur-sm md:px-8 md:py-5">
-          <div className="flex w-full items-end justify-between gap-4">
-            <h1 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Equis<span className="text-primary">Math</span>
-            </h1>
-            <p className="hidden text-right font-mono text-xs text-muted-foreground md:block md:text-sm">
+          <div className="flex w-full items-center justify-between gap-4">
+            <div className="flex min-w-0 flex-1 items-center gap-3">
+              {role !== null && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="shrink-0 text-muted-foreground hover:text-foreground"
+                  onClick={handleBackToOnboarding}
+                  aria-label="Volver al inicio"
+                >
+                  <ArrowLeft className="size-4 md:size-[18px]" aria-hidden />
+                  <span className="ml-1.5 hidden sm:inline">Volver</span>
+                </Button>
+              )}
+              <h1 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Equis<span className="text-primary">Math</span>
+              </h1>
+            </div>
+            <p className="hidden shrink-0 text-right font-mono text-xs text-muted-foreground md:block md:text-sm">
               Resuelve ecuaciones lineales
             </p>
           </div>

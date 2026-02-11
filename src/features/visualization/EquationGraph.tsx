@@ -15,6 +15,9 @@ export interface EquationGraphProps {
 const X_DOMAIN: [number, number] = [-10, 10];
 const Y_DOMAIN: [number, number] = [-10, 10];
 
+/** Fallback size when container not yet measured so Mafs mounts immediately (avoids rendering null). */
+const FALLBACK_DIMENSIONS = { width: 300, height: 260 };
+
 function hasBlocks(equation: EquationState): boolean {
   return equation.leftSide.length > 0 || equation.rightSide.length > 0;
 }
@@ -41,7 +44,13 @@ export function EquationGraph({
     const ro = new ResizeObserver(updateDimensions);
     ro.observe(el);
     updateDimensions();
-    return () => ro.disconnect();
+    const raf = requestAnimationFrame(() => {
+      updateDimensions();
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
   }, []);
 
   const coefficients =
@@ -50,18 +59,23 @@ export function EquationGraph({
 
   const empty = !hasBlocks(equation);
   const yAt = (x: number) => a * x + c;
-  const canShowMafs = !empty && dimensions.width > 0 && dimensions.height > 0;
-  const hasDimensions = dimensions.width > 0 && dimensions.height > 0;
+  const hasMeasuredSize = dimensions.width > 0 && dimensions.height > 0;
+  const effectiveDimensions = hasMeasuredSize ? dimensions : FALLBACK_DIMENSIONS;
+  const canShowMafs = !empty;
+  const hasDimensions = hasMeasuredSize;
+
+  const containerStyle =
+    hasDimensions
+      ? { width: dimensions.width, height: dimensions.height, maxWidth: "100%", maxHeight: "100%" }
+      : !empty
+        ? { minWidth: 280, minHeight: 260 }
+        : undefined;
 
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg"
-      style={
-        hasDimensions
-          ? { width: dimensions.width, height: dimensions.height, maxWidth: "100%", maxHeight: "100%" }
-          : undefined
-      }
+      style={containerStyle}
     >
       {empty ? (
         <div className="flex h-full flex-col items-center justify-center gap-4 p-8">
@@ -93,8 +107,8 @@ export function EquationGraph({
         </div>
       ) : canShowMafs ? (
         <Mafs
-          width={dimensions.width}
-          height={dimensions.height}
+          width={effectiveDimensions.width}
+          height={effectiveDimensions.height}
           viewBox={{ x: X_DOMAIN, y: Y_DOMAIN }}
           pan
           zoom={{ min: 0.25, max: 8 }}
