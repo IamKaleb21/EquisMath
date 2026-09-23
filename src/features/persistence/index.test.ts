@@ -80,6 +80,11 @@ describe("features/persistence (Fase 1)", () => {
       });
       expect(loadFromLocalStorage().maxUnlockedLevel).toBe(2);
     });
+    it("restores role when valid TUI", () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ role: "TUI" }));
+      expect(loadFromLocalStorage().role).toBe("TUI");
+    });
+
     it("ignores invalid role and does not set it", () => {
       localStorage.setItem(
         STORAGE_KEY,

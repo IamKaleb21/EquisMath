@@ -1,5 +1,5 @@
 import type { Role } from "@/shared/types";
-import { BookOpen, PenLine } from "lucide-react";
+import { BookOpen, PenLine, Camera } from "lucide-react";
 import { motion } from "framer-motion";
 import { useGameStore } from "@/shared/store/gameStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,7 +38,7 @@ export function RoleSelector() {
         ¿Cómo quieres usar EquisMath?
       </motion.p>
       
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 max-w-4xl mx-auto w-full">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 max-w-5xl mx-auto w-full">
         <motion.div variants={item}>
           <Card
             className={cn(
@@ -93,7 +93,32 @@ export function RoleSelector() {
           </Card>
         </motion.div>
 
-
+        <motion.div variants={item}>
+          <Card
+            className={cn(
+              "cursor-pointer h-full rounded-2xl border border-border bg-card/90 shadow-lg transition-all duration-300",
+              "hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
+            )}
+            onClick={() => handleSelect("TUI")}
+            role="button"
+            aria-label="Elegir Modo Físico con cámara"
+          >
+            <CardHeader className="pb-2">
+              <span className="mb-2 inline-block rounded-full bg-primary/20 px-2.5 py-0.5 text-xs font-medium text-primary">
+                Experimentar
+              </span>
+              <CardTitle className="flex items-center gap-2 font-display text-xl text-primary">
+                <Camera className="size-5" aria-hidden />
+                Modo Físico
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Mueve bloques impresos frente a la cámara y resuelve la ecuación.
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </motion.div>
   );

@@ -34,15 +34,11 @@ describe("features/role-selector (Fase 5)", () => {
   }
 
   describe("RoleSelector component", () => {
-    it("renders two options: STUDENT and TEACHER", () => {
+    it("renders three options: STUDENT, TEACHER, and TUI", () => {
       renderRoleSelector();
       expect(container.textContent).toContain("Soy Estudiante");
       expect(container.textContent).toContain("Soy Docente");
-    });
-
-    it("does not expose the camera (TUI) mode in the selector", () => {
-      renderRoleSelector();
-      expect(container.textContent).not.toMatch(/Físico/i);
+      expect(container.textContent).toContain("Modo Físico");
     });
 
     it("displays user-friendly labels (e.g., 'Estudiante' and 'Docente')", () => {
@@ -54,16 +50,17 @@ describe("features/role-selector (Fase 5)", () => {
     it("buttons/cards are clickable and accessible", () => {
       renderRoleSelector();
       const buttons = container.querySelectorAll('[role="button"]');
-      expect(buttons.length).toBeGreaterThanOrEqual(2);
+      expect(buttons.length).toBeGreaterThanOrEqual(3);
       const ariaLabels = Array.from(buttons).map((el) => el.getAttribute("aria-label"));
       expect(ariaLabels.some((l) => l?.includes("Estudiante"))).toBe(true);
       expect(ariaLabels.some((l) => l?.includes("Docente"))).toBe(true);
+      expect(ariaLabels.some((l) => l?.includes("Físico"))).toBe(true);
     });
 
     it("has visually distinct styling for each role option", () => {
       renderRoleSelector();
       const cards = container.querySelectorAll('[role="button"]');
-      expect(cards.length).toBe(2);
+      expect(cards.length).toBe(3);
     });
   });
 
@@ -92,6 +89,19 @@ describe("features/role-selector (Fase 5)", () => {
         (teacherCard as HTMLElement).click();
       });
       expect(setRoleSpy).toHaveBeenCalledWith("TEACHER");
+    });
+
+    it("calls setRole('TUI') when the physical mode option is clicked", () => {
+      const setRoleSpy = vi.spyOn(useGameStore.getState(), "setRole");
+      renderRoleSelector();
+      const tuiCard = Array.from(container.querySelectorAll('[role="button"]')).find(
+        (el) => el.textContent?.includes("Modo Físico")
+      );
+      expect(tuiCard).toBeTruthy();
+      act(() => {
+        (tuiCard as HTMLElement).click();
+      });
+      expect(setRoleSpy).toHaveBeenCalledWith("TUI");
     });
 
     it("calls persistToLocalStorage after setRole", () => {

@@ -16,7 +16,9 @@ export function loadFromLocalStorage(): Partial<GameState> {
     const data = JSON.parse(raw) as StoredShape;
     if (!data || typeof data !== "object") return {};
     const partial: Partial<GameState> = {};
-    if (data.role === "TEACHER" || data.role === "STUDENT") partial.role = data.role;
+    if (data.role === "TEACHER" || data.role === "STUDENT" || data.role === "TUI") {
+      partial.role = data.role;
+    }
     if (data.lastLevel === 1 || data.lastLevel === 2 || data.lastLevel === 3) {
       partial.currentLevel = data.lastLevel;
     }

@@ -6,7 +6,7 @@ Aplicación web gamificada para aprender álgebra resolviendo ecuaciones lineale
 
 ## Características
 
-- **Selector de rol**: Elige entre modo Estudiante (con niveles) o modo Profesor (sandbox)
+- **Selector de rol**: Elige entre modo Estudiante (con niveles), modo Profesor (sandbox) o Modo Físico (cámara + marcadores ArUco impresos, ver `aruco-markers/`)
 - **Modo estudiante**: 
   - Selección de nivel de dificultad
   - Ecuaciones generadas automáticamente
