@@ -40,6 +40,11 @@ describe("features/role-selector (Fase 5)", () => {
       expect(container.textContent).toContain("Soy Docente");
     });
 
+    it("does not expose the camera (TUI) mode in the selector", () => {
+      renderRoleSelector();
+      expect(container.textContent).not.toMatch(/Físico/i);
+    });
+
     it("displays user-friendly labels (e.g., 'Estudiante' and 'Docente')", () => {
       renderRoleSelector();
       expect(container.textContent).toMatch(/Estudiante/i);
@@ -111,8 +116,6 @@ describe("features/role-selector (Fase 5)", () => {
       act(() => {
         (studentCard as HTMLElement).click();
       });
-      // Clicking again still calls setRole (component does not guard); spec said "optionally" prevent.
-      // So we only assert that setRole is called when we click (contract is: on selection call setRole + persist).
       expect(setRoleSpy).toHaveBeenCalledWith("STUDENT");
     });
   });
@@ -135,7 +138,7 @@ describe("features/role-selector (Fase 5)", () => {
     it("uses theme colors (primary, card, border)", () => {
       renderRoleSelector();
       const html = container.innerHTML;
-      expect(html).toMatch(/text-primary|bg-card|border-border/);
+      expect(html).toMatch(/text-primary|bg-card|border-border|text-emerald-400/);
     });
   });
 });

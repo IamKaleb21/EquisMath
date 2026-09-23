@@ -1,6 +1,8 @@
-export type Role = "TEACHER" | "STUDENT";
+export type Role = "TEACHER" | "STUDENT" | "TUI";
 export type Level = 1 | 2 | 3;
 export type Side = "left" | "right";
+
+export const EXERCISES_PER_LEVEL = 5;
 
 export interface Block {
   id: string;
@@ -24,19 +26,29 @@ export interface HintState {
   consecutiveErrors: number;
 }
 
+export interface SolutionStep {
+  stepNumber: number;
+  description: string;
+  /** Equation state after this step (for LaTeX display). */
+  equationAfter: EquationState;
+}
+
 export interface GameState {
   role: Role | null;
   currentLevel: Level;
+  maxUnlockedLevel: Level;
   score: number;
   totalScore: number;
   equation: EquationState;
   hint: HintState;
+  solutionSteps: SolutionStep[];
 }
 
 export interface LocalStorageData {
   role: Role;
   lastLevel: Level;
   totalScore: number;
+  maxUnlockedLevel: Level;
   hasCompletedLevels: boolean[];
 }
 
@@ -56,8 +68,10 @@ export const initialHintState: HintState = {
 export const initialGameState: GameState = {
   role: null,
   currentLevel: 1,
+  maxUnlockedLevel: 1,
   score: 0,
   totalScore: 0,
   equation: initialEquationState,
   hint: initialHintState,
+  solutionSteps: [],
 };

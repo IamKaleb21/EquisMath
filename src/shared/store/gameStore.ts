@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { EquationState, GameState, Level, Role, Side } from "@/shared/types";
 import {
+  EXERCISES_PER_LEVEL,
   initialGameState,
   initialHintState,
 } from "@/shared/types";
@@ -14,6 +15,7 @@ import {
   applyMove as applyMoveBlock,
   simplifyEquation,
   checkVictory,
+  describeMove,
 } from "@/features/block-system";
 
 export interface LastFailedMove {
@@ -49,11 +51,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
   setEquation: (equation) =>
     set({ equation: { ...equation } }),
 
-  setLevel: (level) =>
+  setLevel: (level) => {
+    if (level > get().maxUnlockedLevel) return;
     set((state) => ({
       currentLevel: level,
+      score: 0,
       hint: { ...state.hint, isFirstExerciseOfLevel: true },
-    })),
+    }));
+  },
 
   applyMove: (blockId, fromSide, toSide) => {
     const state = get();
@@ -71,13 +76,35 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
     const newEquation = applyMoveBlock(equation, blockId, fromSide, toSide);
     const simplified = simplifyEquation(newEquation);
-    set({ equation: simplified });
+    const crossing = fromSide !== toSide;
+    set((s) => ({
+      equation: simplified,
+      solutionSteps:
+        crossing
+          ? [
+              ...s.solutionSteps,
+              {
+                stepNumber: s.solutionSteps.length + 1,
+                description: describeMove(block, fromSide, toSide, equation),
+                equationAfter: simplified,
+              },
+            ]
+          : s.solutionSteps,
+    }));
 
     if (checkVictory(simplified)) {
-      set((s) => ({
-        score: s.score + 1,
-        totalScore: s.totalScore + 1,
-      }));
+      set((s) => {
+        const newScore = Math.min(s.score + 1, EXERCISES_PER_LEVEL);
+        const nextMaxUnlocked: Level =
+          newScore === EXERCISES_PER_LEVEL && s.currentLevel < 3
+            ? (Math.max(s.maxUnlockedLevel, s.currentLevel + 1) as Level)
+            : s.maxUnlockedLevel;
+        return {
+          score: newScore,
+          totalScore: s.totalScore + 1,
+          maxUnlockedLevel: nextMaxUnlocked,
+        };
+      });
       get().clearHint();
       get().persistToLocalStorage();
       // TODO (FR4): optional playPopSound() when user preference enabled
@@ -87,15 +114,19 @@ export const useGameStore = create<GameStore>((set, get) => ({
   clearLastFailedMove: () => set({ lastFailedMove: null }),
 
   requestNewEquation: (options) => {
-    const level = get().currentLevel;
+    const state = get();
+    const level = state.currentLevel;
     const result = generateEquation(level);
     const isFirstOfLevel = options?.isFirstOfLevel === true;
-    set((state) => ({
+    const resetScore = state.score === EXERCISES_PER_LEVEL;
+    set((s) => ({
       equation: { ...result },
+      ...(resetScore ? { score: 0 } : {}),
       hint: {
         ...initialHintState,
-        isFirstExerciseOfLevel: isFirstOfLevel ? state.hint.isFirstExerciseOfLevel : false,
+        isFirstExerciseOfLevel: isFirstOfLevel ? s.hint.isFirstExerciseOfLevel : false,
       },
+      solutionSteps: [],
     }));
   },
 
@@ -150,7 +181,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
       role: state.role,
       lastLevel: state.currentLevel,
       totalScore: state.totalScore,
-      hasCompletedLevels: [], // can be extended when we track level completion
+      maxUnlockedLevel: state.maxUnlockedLevel,
+      hasCompletedLevels: [],
     });
   },
 

@@ -13,11 +13,13 @@ const LEVELS: { level: Level; label: string; description: string }[] = [
 
 export function LevelSelect() {
   const currentLevel = useGameStore((s) => s.currentLevel);
+  const maxUnlockedLevel = useGameStore((s) => s.maxUnlockedLevel);
   const setLevel = useGameStore((s) => s.setLevel);
   const requestNewEquation = useGameStore((s) => s.requestNewEquation);
   const persistToLocalStorage = useGameStore((s) => s.persistToLocalStorage);
 
   function handleSelect(level: Level) {
+    if (level > maxUnlockedLevel) return;
     setLevel(level);
     requestNewEquation({ isFirstOfLevel: true });
     persistToLocalStorage();
@@ -29,24 +31,30 @@ export function LevelSelect() {
       role="group"
       aria-label="Seleccionar nivel"
     >
-      {LEVELS.map(({ level, label, description }) => (
-        <button
-          key={level}
-          type="button"
-          onClick={() => handleSelect(level)}
-          className={cn(
-            "flex-1 rounded-lg px-3 py-2.5 text-left transition-all duration-200 sm:flex-none sm:px-4 min-w-0 sm:first:rounded-l-lg sm:last:rounded-r-lg",
-            currentLevel === level
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-foreground hover:bg-muted/50"
-          )}
-          aria-pressed={currentLevel === level ? "true" : "false"}
-          aria-label={`Seleccionar ${label}`}
-        >
-          <span className="block font-semibold">{label}</span>
-          <span className="block text-xs opacity-80">{description}</span>
-        </button>
-      ))}
+      {LEVELS.map(({ level, label, description }) => {
+        const locked = level > maxUnlockedLevel;
+        return (
+          <button
+            key={level}
+            type="button"
+            disabled={locked}
+            onClick={() => handleSelect(level)}
+            className={cn(
+              "flex-1 rounded-lg px-3 py-2.5 text-left transition-all duration-200 sm:flex-none sm:px-4 min-w-0 sm:first:rounded-l-lg sm:last:rounded-r-lg",
+              locked && "cursor-not-allowed opacity-60",
+              currentLevel === level
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : !locked && "text-foreground hover:bg-muted/50"
+            )}
+            aria-pressed={currentLevel === level ? "true" : "false"}
+            aria-disabled={locked}
+            aria-label={locked ? `${label} (bloqueado)` : `Seleccionar ${label}`}
+          >
+            <span className="block font-semibold">{label}</span>
+            <span className="block text-xs opacity-80">{description}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

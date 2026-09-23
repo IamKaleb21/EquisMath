@@ -1,5 +1,6 @@
 export { validateMove, canCoefficientBeMoved } from "./validateMove";
 export { applyMove } from "./applyMove";
+export { describeMove } from "./describeMove";
 export { simplifyEquation } from "./simplifyEquation";
 export { checkVictory } from "./checkVictory";
 export { EquationBar } from "./EquationBar";

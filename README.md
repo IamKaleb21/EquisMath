@@ -2,6 +2,8 @@
 
 Aplicación web gamificada para aprender álgebra resolviendo ecuaciones lineales mediante bloques arrastrables.
 
+**Versión en línea:** https://equismath.imkaleb.dpdns.org (no requiere instalación).
+
 ## Características
 
 - **Selector de rol**: Elige entre modo Estudiante (con niveles) o modo Profesor (sandbox)
@@ -91,4 +93,4 @@ src/
 
 ## Licencia
 
-MIT
+Copyright (c) 2026. Todos los derechos reservados. Prohibida su distribución, copia o modificación sin autorización expresa de los autores (Aplicación sujeta a registro de patente).

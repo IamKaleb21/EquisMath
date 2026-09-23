@@ -24,9 +24,10 @@ describe("shared/types (Fase 1)", () => {
   });
 
   describe("initialGameState", () => {
-    it("has role null, currentLevel 1, score 0, totalScore 0", () => {
+    it("has role null, currentLevel 1, maxUnlockedLevel 1, score 0, totalScore 0", () => {
       expect(initialGameState.role).toBeNull();
       expect(initialGameState.currentLevel).toBe(1);
+      expect(initialGameState.maxUnlockedLevel).toBe(1);
       expect(initialGameState.score).toBe(0);
       expect(initialGameState.totalScore).toBe(0);
     });

@@ -11,10 +11,10 @@ import { EquationGraph, ValueTable } from "@/features/visualization";
 import { ProgressBar, useVictoryEffect } from "@/features/feedback";
 import { HandHint, useHintTimer } from "@/features/hint-system";
 import { LevelSelect } from "./LevelSelect";
+import { SolutionStepsList } from "./SolutionStepsList";
 import { Button } from "@/components/ui/button";
 import { cn, primaryButtonClass } from "@/shared/lib/utils";
-
-const PROGRESS_MAX = 10;
+import { EXERCISES_PER_LEVEL } from "@/shared/types";
 
 const stagger = { show: { transition: { staggerChildren: 0.06, delayChildren: 0.02 } } };
 const item = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
@@ -116,13 +116,13 @@ export function StudentMode() {
           <div className="shrink-0 rounded-2xl border border-border bg-card/30 p-4">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-muted-foreground">
-                Llevas <span className="font-semibold text-foreground">{score}</span> de {PROGRESS_MAX}
+                Llevas <span className="font-semibold text-foreground">{score}</span> de {EXERCISES_PER_LEVEL}
               </span>
               <span className="rounded-full bg-primary/20 px-2.5 py-0.5 font-mono text-xs font-medium text-primary">
-                Meta: {PROGRESS_MAX}
+                Meta: {EXERCISES_PER_LEVEL}
               </span>
             </div>
-            <ProgressBar score={score} max={PROGRESS_MAX} showLabel={false} />
+            <ProgressBar score={score} max={EXERCISES_PER_LEVEL} showLabel={false} />
           </div>
 
           {/* Bloques de ecuación */}
@@ -136,36 +136,25 @@ export function StudentMode() {
               <EquationBar equation={equation} />
             </div>
           </div>
-        </motion.div>
-      </motion.div>
 
-      {/* Victoria: overlay centrado */}
-      {won && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="flex flex-col items-center gap-5 rounded-2xl border border-primary/30 bg-zinc-950/95 px-12 py-10 shadow-2xl"
-          >
-            <p className="font-display text-2xl font-semibold text-primary">¡Muy bien!</p>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          {/* Pasos de solución */}
+          <div className="shrink-0 rounded-2xl border border-border/80 bg-card/40 p-4 shadow-md">
+            <SolutionStepsList />
+          </div>
+
+          {won && (
+            <div className="shrink-0">
               <Button
                 type="button"
                 onClick={handleNext}
-                className={cn(primaryButtonClass, "min-w-[180px] rounded-xl px-8 py-3")}
+                className={cn(primaryButtonClass, "w-full rounded-xl px-8 py-3")}
               >
                 Siguiente
               </Button>
-            </motion.div>
-          </motion.div>
+            </div>
+          )}
         </motion.div>
-      )}
+      </motion.div>
 
       <HandHint />
     </div>

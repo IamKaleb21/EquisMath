@@ -6,6 +6,7 @@ type StoredShape = {
   role?: string;
   lastLevel?: number;
   totalScore?: number;
+  maxUnlockedLevel?: number;
 };
 
 export function loadFromLocalStorage(): Partial<GameState> {
@@ -21,6 +22,9 @@ export function loadFromLocalStorage(): Partial<GameState> {
     }
     if (typeof data.totalScore === "number" && data.totalScore >= 0) {
       partial.totalScore = data.totalScore;
+    }
+    if (data.maxUnlockedLevel === 1 || data.maxUnlockedLevel === 2 || data.maxUnlockedLevel === 3) {
+      partial.maxUnlockedLevel = data.maxUnlockedLevel;
     }
     return partial;
   } catch {

@@ -34,6 +34,7 @@ describe("features/persistence (Fase 1)", () => {
         role: "STUDENT",
         lastLevel: 2,
         totalScore: 10,
+        maxUnlockedLevel: 1,
         hasCompletedLevels: [],
       });
       expect(loadFromLocalStorage().role).toBe("STUDENT");
@@ -43,6 +44,7 @@ describe("features/persistence (Fase 1)", () => {
           role: "TEACHER",
           lastLevel: 1,
           totalScore: 0,
+          maxUnlockedLevel: 1,
           hasCompletedLevels: [],
         })
       );
@@ -53,6 +55,7 @@ describe("features/persistence (Fase 1)", () => {
         role: "STUDENT",
         lastLevel: 3,
         totalScore: 0,
+        maxUnlockedLevel: 3,
         hasCompletedLevels: [],
       });
       expect(loadFromLocalStorage().currentLevel).toBe(3);
@@ -62,9 +65,20 @@ describe("features/persistence (Fase 1)", () => {
         role: "STUDENT",
         lastLevel: 1,
         totalScore: 100,
+        maxUnlockedLevel: 1,
         hasCompletedLevels: [],
       });
       expect(loadFromLocalStorage().totalScore).toBe(100);
+    });
+    it("restores maxUnlockedLevel when 1, 2 or 3", () => {
+      saveToLocalStorage({
+        role: "STUDENT",
+        lastLevel: 2,
+        totalScore: 0,
+        maxUnlockedLevel: 2,
+        hasCompletedLevels: [],
+      });
+      expect(loadFromLocalStorage().maxUnlockedLevel).toBe(2);
     });
     it("ignores invalid role and does not set it", () => {
       localStorage.setItem(
@@ -80,26 +94,38 @@ describe("features/persistence (Fase 1)", () => {
     it("ignores lastLevel when invalid (0, 4, negative)", () => {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ role: "STUDENT", lastLevel: 0, totalScore: 0 })
+        JSON.stringify({ role: "STUDENT", lastLevel: 0, totalScore: 0, maxUnlockedLevel: 1 })
       );
       expect(loadFromLocalStorage()).not.toHaveProperty("currentLevel");
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ role: "STUDENT", lastLevel: 4, totalScore: 0 })
+        JSON.stringify({ role: "STUDENT", lastLevel: 4, totalScore: 0, maxUnlockedLevel: 1 })
       );
       expect(loadFromLocalStorage()).not.toHaveProperty("currentLevel");
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ role: "STUDENT", lastLevel: -1, totalScore: 0 })
+        JSON.stringify({ role: "STUDENT", lastLevel: -1, totalScore: 0, maxUnlockedLevel: 1 })
       );
       expect(loadFromLocalStorage()).not.toHaveProperty("currentLevel");
     });
     it("ignores totalScore when negative", () => {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ role: "STUDENT", lastLevel: 1, totalScore: -5 })
+        JSON.stringify({ role: "STUDENT", lastLevel: 1, totalScore: -5, maxUnlockedLevel: 1 })
       );
       expect(loadFromLocalStorage()).not.toHaveProperty("totalScore");
+    });
+    it("ignores maxUnlockedLevel when invalid (0, 4)", () => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ role: "STUDENT", lastLevel: 1, totalScore: 0, maxUnlockedLevel: 0 })
+      );
+      expect(loadFromLocalStorage()).not.toHaveProperty("maxUnlockedLevel");
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ role: "STUDENT", lastLevel: 1, totalScore: 0, maxUnlockedLevel: 4 })
+      );
+      expect(loadFromLocalStorage()).not.toHaveProperty("maxUnlockedLevel");
     });
   });
 
@@ -109,6 +135,7 @@ describe("features/persistence (Fase 1)", () => {
         role: "STUDENT",
         lastLevel: 2,
         totalScore: 5,
+        maxUnlockedLevel: 2,
         hasCompletedLevels: [true, false, true],
       };
       saveToLocalStorage(data);
@@ -116,6 +143,7 @@ describe("features/persistence (Fase 1)", () => {
       expect(loaded.role).toBe(data.role);
       expect(loaded.currentLevel).toBe(data.lastLevel);
       expect(loaded.totalScore).toBe(data.totalScore);
+      expect(loaded.maxUnlockedLevel).toBe(data.maxUnlockedLevel);
     });
   });
 });

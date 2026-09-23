@@ -1,7 +1,6 @@
 /**
  * FR4: Trigger confetti on victory. Uses canvas-confetti.
  */
-// @ts-expect-error canvas-confetti has no types
 import confetti from "canvas-confetti";
 
 interface ConfettiOptions {

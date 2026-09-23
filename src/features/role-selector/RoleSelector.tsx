@@ -37,12 +37,12 @@ export function RoleSelector() {
       >
         ¿Cómo quieres usar EquisMath?
       </motion.p>
-      {/* Asymmetric: two cards with different visual weight; second offset for overlap feel */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
-        <motion.div variants={item} className="sm:mt-0">
+      
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 max-w-4xl mx-auto w-full">
+        <motion.div variants={item}>
           <Card
             className={cn(
-              "cursor-pointer rounded-2xl border border-border bg-card/90 shadow-lg transition-all duration-300",
+              "cursor-pointer h-full rounded-2xl border border-border bg-card/90 shadow-lg transition-all duration-300",
               "hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
             )}
             onClick={() => handleSelect("STUDENT")}
@@ -60,15 +60,16 @@ export function RoleSelector() {
             </CardHeader>
             <CardContent>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Niveles y bloques arrastrables para despejar.
+                Niveles y bloques arrastrables en pantalla para despejar.
               </p>
             </CardContent>
           </Card>
         </motion.div>
-        <motion.div variants={item} className="sm:translate-y-4">
+
+        <motion.div variants={item}>
           <Card
             className={cn(
-              "cursor-pointer rounded-2xl border border-border bg-card/90 shadow-lg transition-all duration-300",
+              "cursor-pointer h-full rounded-2xl border border-border bg-card/90 shadow-lg transition-all duration-300",
               "hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
             )}
             onClick={() => handleSelect("TEACHER")}
@@ -86,11 +87,13 @@ export function RoleSelector() {
             </CardHeader>
             <CardContent>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Escribe una ecuación y mira la gráfica.
+                Escribe una ecuación y mira su gráfica y tabla de valores.
               </p>
             </CardContent>
           </Card>
         </motion.div>
+
+
       </div>
     </motion.div>
   );

@@ -5,6 +5,7 @@ import { useGameStore } from "@/shared/store/gameStore";
 import { RoleSelector } from "@/features/role-selector";
 import { StudentMode } from "@/features/student-mode";
 import { TeacherMode } from "@/features/teacher-mode";
+import { TuiMode } from "@/features/tui-mode";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 
@@ -36,7 +37,7 @@ function App() {
 
       <div className={cn(
         "relative z-10 flex flex-1 flex-col",
-        role === "STUDENT" ? "h-screen overflow-hidden" : "min-h-screen overflow-y-auto"
+        role === "STUDENT" || role === "TUI" ? "h-screen overflow-hidden" : "min-h-screen overflow-y-auto"
       )}>
         <header className="shrink-0 border-b border-border/50 bg-zinc-950/80 px-4 py-4 backdrop-blur-sm md:px-8 md:py-5">
           <div className="flex w-full items-center justify-between gap-4">
@@ -67,7 +68,7 @@ function App() {
         <motion.main
           className={cn(
             "flex flex-1 flex-col min-h-0",
-            role === "STUDENT" ? "p-2 md:p-3" : "px-4 py-4 md:px-6 md:py-6"
+            role === "STUDENT" || role === "TUI" ? "p-2 md:p-3" : "px-4 py-4 md:px-6 md:py-6"
           )}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -75,11 +76,12 @@ function App() {
         >
           <div className={cn(
             "flex w-full min-w-0",
-            role === "STUDENT" ? "flex-1 min-h-0" : "flex-1"
+            role === "STUDENT" || role === "TUI" ? "flex-1 min-h-0" : "flex-1"
           )}>
             {role === null && <RoleSelector />}
             {role === "STUDENT" && <StudentMode />}
             {role === "TEACHER" && <TeacherMode />}
+            {role === "TUI" && <TuiMode />}
           </div>
         </motion.main>
 

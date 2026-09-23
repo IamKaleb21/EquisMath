@@ -10,6 +10,7 @@ import {
   applyMove,
   simplifyEquation,
   checkVictory,
+  describeMove,
 } from "./index";
 import { blocksToLineCoefficients } from "@/features/visualization";
 
@@ -453,6 +454,41 @@ describe("features/block-system (Fase 4)", () => {
     it("drop zones are configured for left and right sides", () => {
       expect(["left", "right"]).toContain("left");
       expect(["left", "right"]).toContain("right");
+    });
+  });
+
+  describe("describeMove", () => {
+    it("returns description containing 'Mover' and the term when constant +5 moved left to right", () => {
+      const equation = eq(
+        [constant("c0", 2), variable("v1", 1), constant("c1", 5)],
+        [constant("c2", 7)]
+      );
+      const block = constant("c1", 5);
+      const desc = describeMove(block, "left", "right", equation);
+      expect(desc).toMatch(/Mover/i);
+      expect(desc).toMatch(/5|\+5/);
+    });
+
+    it("returns description coherent with sign when constant -3 moved right to left", () => {
+      const equation = eq(
+        [variable("v1", 1)],
+        [constant("c1", 5), { id: "c2", type: "CONSTANT", value: 3, sign: -1 }]
+      );
+      const block = { id: "c2", type: "CONSTANT" as const, value: 3, sign: -1 as 1 | -1 };
+      const desc = describeMove(block, "right", "left", equation);
+      expect(desc).toMatch(/Mover/i);
+      expect(desc).toMatch(/-3|3/);
+    });
+
+    it("returns description like 'Pasar ... como divisor' when coefficient moved (Level 2)", () => {
+      const equation = eq(
+        [constant("c0", 2), variable("v1", 1)],
+        [constant("c1", 6)]
+      );
+      const block = constant("c0", 2);
+      const desc = describeMove(block, "left", "right", equation);
+      expect(desc).toMatch(/divisor|Pasar/i);
+      expect(desc).toMatch(/2/);
     });
   });
 });

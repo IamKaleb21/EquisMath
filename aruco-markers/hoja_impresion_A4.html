@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>EquisMath TUI - Plantilla de Impresión A4</title>
+  <style>
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page {
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        page-break-after: always;
+      }
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f4f5;
+      color: #18181b;
+      margin: 20px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .no-print {
+      max-width: 800px;
+      width: 100%;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e4e4e7;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    }
+
+    .no-print h1 {
+      margin-top: 0;
+      color: #059669;
+      font-size: 24px;
+    }
+
+    .btn-print {
+      background: #059669;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-print:hover {
+      background: #047857;
+    }
+
+    /* A4 representation */
+    .page {
+      width: 210mm;
+      height: 297mm;
+      background: #ffffff;
+      box-sizing: border-box;
+      padding: 15mm;
+      border: 1px solid #e4e4e7;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header {
+      border-bottom: 2px solid #e4e4e7;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #18181b;
+    }
+
+    .header p {
+      margin: 4px 0 0 0;
+      font-size: 12px;
+      color: #71717a;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      flex-grow: 1;
+    }
+
+    .marker-card {
+      border: 1px dashed #a1a1aa;
+      border-radius: 8px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      background: #fafafa;
+    }
+
+    .marker-title {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #27272a;
+    }
+
+    .marker-desc {
+      font-size: 11px;
+      color: #71717a;
+      margin-top: 8px;
+      max-width: 180px;
+    }
+
+    .marker-svg {
+      width: 45mm;
+      height: 45mm;
+      border: 3px solid #000000;
+      box-sizing: border-box;
+    }
+
+    .footer {
+      border-top: 1px solid #e4e4e7;
+      padding-top: 10px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #a1a1aa;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print">
+    <h1>Plantilla de Impresión de Marcadores (A4)</h1>
+    <p>Esta página contiene todos los marcadores ArUco necesarios para la demo y autocalibración de <strong>EquisMath TUI</strong>. Se formateó automáticamente para ajustarse a una hoja A4 física.</p>
+    <p><strong>Instrucciones para guardar o imprimir:</strong></p>
+    <ul>
+      <li>Haz clic en el botón <strong>Imprimir Plantilla</strong>.</li>
+      <li>En la ventana de impresión, selecciona tu impresora o elige <strong>Guardar como PDF</strong>.</li>
+      <li>Asegúrate de que el tamaño de papel esté configurado como <strong>A4</strong> y los márgenes en <strong>Ninguno</strong> o <strong>Predeterminado</strong>.</li>
+      <li>Activa la opción de "Gráficos de fondo" si tu navegador no muestra los bordes.</li>
+    </ul>
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Imprimir Plantilla
+    </button>
+  </div>
+
+  <div class="page">
+    <div class="header">
+      <h2>EquisMath TUI - Set Completo de Marcadores</h2>
+      <p>Imprimir en escala 100% (tamaño real A4). Cada marcador mide aproximadamente 4.5 x 4.5 cm.</p>
+    </div>
+
+    <div class="grid">
+      <!-- Fila 1: Bloque 3x y Bloque 8 -->
+      <div class="marker-card">
+        <div class="marker-title">Término 3x (ID 1)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="2" y="5" width="1" height="1" fill="white"/><rect x="2" y="6" width="1" height="1" fill="white"/><rect x="4" y="6" width="1" height="1" fill="white"/><rect x="5" y="6" width="1" height="1" fill="white"/><rect x="6" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Pegar en el bloque variable (Lado Izquierdo).</div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-title">Término constante 8 (ID 5)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="2" y="5" width="1" height="1" fill="white"/><rect x="4" y="5" width="1" height="1" fill="white"/><rect x="5" y="5" width="1" height="1" fill="white"/><rect x="6" y="5" width="1" height="1" fill="white"/><rect x="2" y="6" width="1" height="1" fill="white"/><rect x="4" y="6" width="1" height="1" fill="white"/><rect x="5" y="6" width="1" height="1" fill="white"/><rect x="6" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Pegar en el bloque constante (Lado Derecho).</div>
+      </div>
+
+      <!-- Fila 2: Cara -4 y Cara +4 (Bloque del cambio de signo) -->
+      <div class="marker-card">
+        <div class="marker-title">Término constante -4 (ID 3)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="2" y="5" width="1" height="1" fill="white"/><rect x="3" y="6" width="1" height="1" fill="white"/><rect x="4" y="6" width="1" height="1" fill="white"/><rect x="5" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Pegar en la <strong>Cara A</strong> del bloque móvil del 4.</div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-title">Término constante +4 (ID 4)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="2" y="5" width="1" height="1" fill="white"/><rect x="4" y="5" width="1" height="1" fill="white"/><rect x="5" y="5" width="1" height="1" fill="white"/><rect x="6" y="5" width="1" height="1" fill="white"/><rect x="2" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Pegar en la <strong>Cara B</strong> (opuesta) del mismo bloque del 4.</div>
+      </div>
+
+      <!-- Fila 3: Esquinas Calibración Superior (ID 10 y 11) -->
+      <div class="marker-card">
+        <div class="marker-title">Esquina Sup. Izquierda (ID 10)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="3" y="5" width="1" height="1" fill="white"/><rect x="6" y="5" width="1" height="1" fill="white"/><rect x="3" y="6" width="1" height="1" fill="white"/><rect x="6" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Fijar en la esquina superior izquierda del tapete.</div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-title">Esquina Sup. Derecha (ID 11)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="3" y="5" width="1" height="1" fill="white"/><rect x="6" y="5" width="1" height="1" fill="white"/><rect x="3" y="6" width="1" height="1" fill="white"/><rect x="4" y="6" width="1" height="1" fill="white"/><rect x="5" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Fijar en la esquina superior derecha del tapete.</div>
+      </div>
+
+      <!-- Fila 4: Esquinas Calibración Inferior (ID 12 y 13) -->
+      <div class="marker-card">
+        <div class="marker-title">Esquina Inf. Izquierda (ID 12)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="3" y="5" width="1" height="1" fill="white"/><rect x="4" y="5" width="1" height="1" fill="white"/><rect x="5" y="5" width="1" height="1" fill="white"/><rect x="2" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Fijar en la esquina inferior izquierda del tapete.</div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-title">Esquina Inf. Derecha (ID 13)</div>
+        <div class="marker-svg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9"><rect x="0" y="0" width="9" height="9" fill="white"/><rect x="1" y="1" width="7" height="7" fill="black"/><rect x="2" y="2" width="1" height="1" fill="white"/><rect x="2" y="3" width="1" height="1" fill="white"/><rect x="2" y="4" width="1" height="1" fill="white"/><rect x="3" y="5" width="1" height="1" fill="white"/><rect x="4" y="5" width="1" height="1" fill="white"/><rect x="5" y="5" width="1" height="1" fill="white"/><rect x="2" y="6" width="1" height="1" fill="white"/><rect x="4" y="6" width="1" height="1" fill="white"/><rect x="5" y="6" width="1" height="1" fill="white"/><rect x="6" y="6" width="1" height="1" fill="white"/></svg>
+        </div>
+        <div class="marker-desc">Fijar en la esquina inferior derecha del tapete.</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>EquisMath TUI - Prototipo de Modelo de Utilidad (MVP)</span>
+      <span>Página 1 de 1</span>
+    </div>
+  </div>
+
+</body>
+</html>

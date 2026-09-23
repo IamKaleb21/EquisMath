@@ -28,6 +28,7 @@ describe("features/student-mode (Fase 6)", () => {
     useGameStore.setState({
       role: "STUDENT",
       currentLevel: 1,
+      maxUnlockedLevel: 3,
       score: 0,
       equation: { leftSide: [], rightSide: [], solution: 0 },
       hint: {
@@ -36,6 +37,7 @@ describe("features/student-mode (Fase 6)", () => {
         isFirstExerciseOfLevel: false,
         consecutiveErrors: 0,
       },
+      solutionSteps: [],
     });
     container = document.createElement("div");
     document.body.appendChild(container);
@@ -69,7 +71,7 @@ describe("features/student-mode (Fase 6)", () => {
 
     it("renders ProgressBar (feedback) component", () => {
       renderStudentMode();
-      expect(container.textContent).toMatch(/Llevas|Siguiente meta|de 10/);
+      expect(container.textContent).toMatch(/Llevas|Siguiente meta|de 5/);
       expect(container.querySelector('[role="progressbar"]')).toBeTruthy();
     });
 
@@ -108,7 +110,7 @@ describe("features/student-mode (Fase 6)", () => {
     });
 
     it("shows current level as selected/highlighted", () => {
-      useGameStore.setState({ currentLevel: 2 });
+      useGameStore.setState({ currentLevel: 2, maxUnlockedLevel: 2 });
       renderLevelSelect();
       const buttons = container.querySelectorAll("button");
       const level2 = Array.from(buttons).find((b) => b.textContent?.includes("Nivel 2"));
@@ -116,6 +118,7 @@ describe("features/student-mode (Fase 6)", () => {
     });
 
     it("calls setLevel when a level is clicked", () => {
+      useGameStore.setState({ maxUnlockedLevel: 3 });
       const setLevelSpy = vi.spyOn(useGameStore.getState(), "setLevel");
       renderLevelSelect();
       const level3 = Array.from(container.querySelectorAll("button")).find(
@@ -128,6 +131,7 @@ describe("features/student-mode (Fase 6)", () => {
     });
 
     it("calls requestNewEquation after level change", () => {
+      useGameStore.setState({ maxUnlockedLevel: 2 });
       const requestSpy = vi.spyOn(useGameStore.getState(), "requestNewEquation");
       renderLevelSelect();
       const level2 = Array.from(container.querySelectorAll("button")).find(
@@ -137,6 +141,57 @@ describe("features/student-mode (Fase 6)", () => {
         (level2 as HTMLButtonElement)?.click();
       });
       expect(requestSpy).toHaveBeenCalledWith({ isFirstOfLevel: true });
+    });
+
+    it("disables level 2 and 3 when maxUnlockedLevel is 1", () => {
+      useGameStore.setState({ maxUnlockedLevel: 1, currentLevel: 1 });
+      renderLevelSelect();
+      const level1 = Array.from(container.querySelectorAll("button")).find(
+        (b) => b.textContent?.includes("Nivel 1")
+      );
+      const level2 = Array.from(container.querySelectorAll("button")).find(
+        (b) => b.textContent?.includes("Nivel 2")
+      );
+      const level3 = Array.from(container.querySelectorAll("button")).find(
+        (b) => b.textContent?.includes("Nivel 3")
+      );
+      expect((level1 as HTMLButtonElement)?.disabled).toBe(false);
+      expect((level2 as HTMLButtonElement)?.disabled).toBe(true);
+      expect((level3 as HTMLButtonElement)?.disabled).toBe(true);
+    });
+
+    it("disables only level 3 when maxUnlockedLevel is 2", () => {
+      useGameStore.setState({ maxUnlockedLevel: 2, currentLevel: 1 });
+      renderLevelSelect();
+      const level2 = Array.from(container.querySelectorAll("button")).find(
+        (b) => b.textContent?.includes("Nivel 2")
+      );
+      const level3 = Array.from(container.querySelectorAll("button")).find(
+        (b) => b.textContent?.includes("Nivel 3")
+      );
+      expect((level2 as HTMLButtonElement)?.disabled).toBe(false);
+      expect((level3 as HTMLButtonElement)?.disabled).toBe(true);
+    });
+
+    it("enables all levels when maxUnlockedLevel is 3", () => {
+      useGameStore.setState({ maxUnlockedLevel: 3 });
+      renderLevelSelect();
+      const buttons = container.querySelectorAll("button");
+      buttons.forEach((btn) => {
+        expect((btn as HTMLButtonElement).disabled).toBe(false);
+      });
+    });
+
+    it("clicking disabled level does not change currentLevel", () => {
+      useGameStore.setState({ maxUnlockedLevel: 1, currentLevel: 1 });
+      renderLevelSelect();
+      const level2 = Array.from(container.querySelectorAll("button")).find(
+        (b) => b.textContent?.includes("Nivel 2")
+      );
+      act(() => {
+        (level2 as HTMLButtonElement)?.click();
+      });
+      expect(useGameStore.getState().currentLevel).toBe(1);
     });
 
     it("displays level difficulty descriptions", () => {
